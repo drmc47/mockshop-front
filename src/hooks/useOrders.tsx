@@ -1,7 +1,8 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { completedOrdersAtom, userIdAtom } from "../state/atom";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { fetcher } from "../utils/fetcher";
 
 export interface OrdersDB {
   products: {
@@ -22,7 +23,7 @@ export const useOrders = () => {
   const userId = useRecoilValue(userIdAtom);
   const getOrders = async () => {
     try {
-      const response: AxiosResponse<OrdersDB[]> = await axios.get(`http://localhost:3000/orders/${userId}`);
+      const response: AxiosResponse<OrdersDB[]> = await fetcher.get(`/orders/${userId}`);
       setCompletedOrders(response.data);
       return response.data;
     } catch (error) {

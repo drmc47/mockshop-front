@@ -1,11 +1,12 @@
 import { useState } from "react";
 import Input from "../components/Input";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { useSetRecoilState } from "recoil";
 import { loginStatusAtom } from "../state/atom";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
+import { fetcher } from "../utils/fetcher";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -17,7 +18,7 @@ function Register() {
 
   const handleRegister = async () => {
     try {
-      await axios.post("http://localhost:3000/register", { username, password, name });
+      await fetcher.post("/register", { username, password, name });
       toast.success("Register successful");
       setLogin(true);
       navigate("/");

@@ -12,8 +12,8 @@ import {
 import { Delete } from "@mui/icons-material";
 import { currencyConverter } from "../utils/currencyConverter";
 import { toast } from "react-toastify";
-import axios from "axios";
 import { useOrders } from "../hooks/useOrders";
+import { fetcher } from "../utils/fetcher";
 
 function Orders() {
   const [shoppingCart, setShoppingCart] = useRecoilState(shoppingCartAtom);
@@ -48,7 +48,7 @@ function Orders() {
     if (!order) return;
     order.status = "completed";
     try {
-      await axios.post("http://localhost:3000/orders", {
+      await fetcher.post("/orders", {
         userId: userId,
         products: order.products,
         total: order.total,

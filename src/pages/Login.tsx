@@ -1,11 +1,12 @@
 import { useState } from "react";
 import Input from "../components/Input";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { loginStatusAtom, userIdAtom } from "../state/atom";
 import { Button } from "@mui/material";
+import { fetcher } from "../utils/fetcher";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -17,7 +18,7 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      const { data } = await axios.post("http://localhost:3000/login", { username, password });
+      const { data } = await fetcher.post("/login", { username, password });
       toast.success("Login successful");
       setLogin(true);
       console.log(data);
